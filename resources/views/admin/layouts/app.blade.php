@@ -26,6 +26,21 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
 
+  <!-- Select2 CSS -->
+<link href="{{asset('admin/dist/css/select2.min.css')}}" rel="stylesheet">
+<link href="{{asset('admin/dist/css/style.css')}}" rel="stylesheet">
+
+<!-- jQuery (Ensure it's included before Select2) -->
+<script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+
+<!-- Select2 JS -->
+<script src="{{asset('admin/dist/js/select2.min.js')}}"></script>
+<script src="{{asset('admin/dist/js/ckeditor.js')}}"></script>
+
+
+
+
+
     <!-- DataTables -->
     <link rel="stylesheet" href="{{asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
@@ -75,7 +90,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+{{-- <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script> --}}
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('admin/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

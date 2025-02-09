@@ -1,0 +1,26 @@
+/* For Single Select */
+.select2-container .select2-selection--single {
+    border: 1px solid #ced4da !important;
+    border-radius: 5px !important;
+    min-height: 40px !important;
+    padding: 5px 10px !important; /* Adjust padding for single select */
+}
+
+/* Style the selection box when an option is chosen */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #495057 !important; /* Text color */
+    line-height: 30px !important; /* Vertically center the text */
+}
+
+/* Dropdown arrow styles */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 30px !important;
+    width: 30px !important;
+    border-left: 1px solid #ced4da !important;
+}
+
+/* Focus style (optional) */
+.select2-container--default .select2-selection--single:focus {
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25) !important;
+}

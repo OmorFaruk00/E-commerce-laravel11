@@ -2,13 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tag;
 use App\Models\Role;
-use App\Models\Roleable;
-use App\Models\RoleUser;
-use App\Models\SystemSetting;
 use App\Models\User;
-use App\Models\UserRole;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Roleable;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\RoleUser;
+use App\Models\UserRole;
+use App\Models\SystemSetting;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -98,6 +101,25 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        \App\Models\Category::factory(100)->create();
+        // \App\Models\Category::factory(10)->create();
+        \App\Models\Brand::factory(10)->create();
+         // Create categories and tags
+         $categories = Category::factory(10)->create(); // Create 10 categories
+         $tags = Tag::factory(5)->create(); // Create 5 tags
+         
+         // Create products and attach categories and tags
+         Product::factory(100) // Create 100 products
+             ->create()
+             ->each(function ($product) use ($categories, $tags) {
+                 // Attach 2 random categories to each product
+                 $product->categories()->attach(
+                     $categories->random(2)->pluck('id')->toArray()
+                 );
+ 
+                 // Attach 3 random tags to each product
+                 $product->tags()->attach(
+                     $tags->random(3)->pluck('id')->toArray() // Attach 3 random tags
+                 );
+             });
     }
 }

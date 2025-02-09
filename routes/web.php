@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TenantController;
@@ -41,10 +43,14 @@ Route::group(['middleware' => ['logged_in','auth']], function () {
     
     Route::resource('roles', RoleController::class);
     Route::resource('category', CategoryController::class);
+    Route::resource('brand', BrandController::class);
     Route::resource('tenant', TenantController::class);
+    Route::resource('product', ProductController::class);
     
 }) ;
 Route::get('/test',[CategoryController::class,'test'])->name('category.test');
+
+Route::get('get-product/{category?}/{brand?}',[ProductController::class,'product']);
 
 
 Route::fallback(function () {
