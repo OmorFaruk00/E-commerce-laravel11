@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
             'sale_price' => 'required|numeric|min:0',
             'sku' => 'required|string|max:255',
             'stock_status' => 'required|in:instock,outofstock', // 'instock' or 'outofstock'
-            'category_ids' => 'required|array|min:1',
+            'category_ids' => 'required',
             'category_ids.*' => 'exists:categories,id', // Validate category IDs exist in the categories table
             'brand_id' => 'required|exists:brands,id',
             'tags_ids' => 'required',

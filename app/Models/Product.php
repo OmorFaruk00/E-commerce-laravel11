@@ -23,4 +23,8 @@ class Product extends Model
     public function brand(){
       return  $this->hasOne(Brand::class,'id','brand_id')->select('id','name');
     }
+     public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

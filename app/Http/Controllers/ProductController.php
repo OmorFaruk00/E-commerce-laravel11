@@ -34,14 +34,14 @@ class ProductController extends Controller
     }
 
  
-    public function show(Product $Product)
+    public function show(Product $product)
     {
-        return $Product;
+        return $product;
     }
    
-    public function edit(Product $product)
+    public function edit($id)
     {
-        return $this->productRepository->edit($product);
+        return $this->productRepository->edit($id);
     }
   
     public function update(ProductRequest $request, Product $product)

@@ -25,7 +25,6 @@ return new class extends Migration
             $table->unsignedBigInteger('quantity')->default(10);
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
             $table->string('image')->nullable();
-            $table->text('images')->nullable();
             $table->softDeletes();
             $table->timestamps();            
         });

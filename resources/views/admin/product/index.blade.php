@@ -35,8 +35,7 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->regular_price }}</td>
                     <td>{{ $item->sale_price }}</td>
-                    <td>{{ $item->brand->name }}</td>
-                    
+                    <td>{{ $item->brand->name }}</td>                    
                     <td>
                       @foreach($item->categories as $index => $category)
                           {{ $category->name }}@if(!$loop->last), @endif

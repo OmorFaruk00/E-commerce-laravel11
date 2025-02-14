@@ -1,106 +1,291 @@
 @extends('admin.layouts.app')
-
 @section('content')
 <section class="content">
     <div class="container-fluid">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Edit Product</h3>
+                <h3 class="card-title">Update Product</h3>
                 <a class="float-right" href="{{ route('product.index') }}"><i class="fas fa-list"></i></a>
             </div>
-            <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('product.update',$product->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" name="name" value="{{ $product->name }}" placeholder="Enter Name">
+                                <input type="text" class="form-control" name="name" placeholder="Enter Name" value="{{$product->name}}">
+                                @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="slug">Slug</label>
-                                <input type="text" class="form-control" name="slug" value="{{ $product->slug }}" placeholder="Enter Slug">
+                                <input type="text" class="form-control" placeholder="Enter slug" name="slug" value="{{$product->slug}}">
+                                @error('slug')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="regular_price">Regular Price</label>
-                                <input type="text" class="form-control" name="regular_price" value="{{ $product->regular_price }}" placeholder="Enter Regular Price">
+                                <input type="text" class="form-control" name="regular_price" placeholder="Enter Regular Price" value="{{$product->regular_price}}">
+                                @error('regular_price')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="sale_price">Sale Price</label>
-                                <input type="text" class="form-control" name="sale_price" value="{{ $product->sale_price }}" placeholder="Enter Sale Price">
+                                <input type="text" class="form-control" name="sale_price" placeholder="Enter Sale Price" value="{{$product->sale_price}}">
+                                @error('sale_price')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Select Categories</label>
-                            <select name="category_ids[]" class="form-control select-category" multiple="multiple">
-                                @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ in_array($category->id, $product->categories->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $category->name }}</option>
-                                @endforeach
-                            </select>
+                            <div class="form-group">
+                                <label for="sku">SKU</label>
+                                <input type="text" class="form-control" name="sku" placeholder="Enter SKU" value="{{$product->sku}}">
+                                @error('sku')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
                         </div>
-
                         <div class="col-md-6">
-                            <label for="brand_id">Brand</label>
-                            <select class="form-control select-brand" name="brand_id">
-                                @foreach ($brands as $brand)
-                                <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                            <div class="form-group">
+                                <label for="stock_status">Stock Status</label>
+                                <select class="form-control" name="stock_status" value="{{$product->stock_status}}">
+                                    <option value="instock">In Stock</option>
+                                    <option value="outofstock">Out of Stock</option>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Select Tags</label>
-                            <select name="tags_ids[]" class="form-control select-tag" multiple="multiple">
-                                @foreach ($tags as $tag)
-                                <option value="{{ $tag->id }}" {{ in_array($tag->id, $product->tags->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $tag->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Image</label>
-                            <input type="file" class="form-control" name="image">
-                            @if($product->image)
-                            <img src="{{ asset($product->image) }}" class="img-thumbnail mt-2" width="100">
-                            @endif
-                        </div>
-
-                        <div class="col-md-6">
-                            <label>Additional Images</label>
-                            <input type="file" class="form-control" name="images[]" multiple>
-                            <div class="mt-2">
-                                @foreach(json_decode($product->images, true) ?? [] as $img)
-                                <img src="{{ asset($img) }}" class="img-thumbnail" width="100">
-                                @endforeach
+                                </select>
+                                @error('stock_status')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Select Categories</label>
+                                <select name="category_ids[]" class="form-control select-category" multiple="multiple">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" 
+                                            {{ in_array($category->id, $selectedCategories ?? []) ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_ids')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>                      
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="brand_id">Brand</label>
+                                <select id="brand-select" class="form-control select-brand" name="brand_id">
+                                    <option disabled selected>Select Brand</option>
+                                    @foreach ($brands as $brand)
+                                    <option value="{{ $brand->id }}" {{ $brand->id == ($product->brand_id ?? '') ? 'selected' : '' }}>{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('brand_id')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Select Tags</label>
+                                <select name="tags_ids[]" class="form-control select-tag" multiple="multiple">
+                                    @foreach ($tags as $tag)
+                                    <option value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTags ?? []) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('tags_ids')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" class="form-control" name="quantity" value="{{$product->quantity}}">
+                                @error('quantity')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="short_description">Short Description</label>
+                                <textarea class="form-control" name="short_description" id="short_description" rows="4" style="height:500px" placeholder="Enter short description">{{$product->short_description}}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" name="description" id="description" rows="4" placeholder="Enter full description">{{$product->description}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="image">Image</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="image" onchange="previewImage(event)">
+                                    <label class="custom-file-label">Choose file</label>
+                                    @error('image')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="mt-2">                                    
+                                    <img src="{{asset($product->image)}}" id="imageShow" alt="Selected Image" class="img-thumbnail" style=" width: 100px; height:100px" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="images">Additional Images</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="images[]" id="images" multiple>
+                                    <label class="custom-file-label" for="images">Choose files</label>
+                                    @error('images')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div id="imagePreview" class="mt-2">
+                                <div class="d-flex d-block">
+                                    @foreach ($product->images as $image)
+                                    <img src="{{ asset($image->path ) }}" alt="Image" class="img-fluid" style=" width:100px; height:100px;margin-right:20px">
+                                    @endforeach
+                                </div>                       
+
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary float-right">Update</button>
+                    <button type="submit" class="btn btn-primary float-right">Save</button>
                 </div>
             </form>
         </div>
     </div>
 </section>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const fileLabel = input.nextElementSibling;
+        const imagePreview = document.getElementById("imageShow");
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = "block";
+            };
+            reader.readAsDataURL(input.files[0]);
+            fileLabel.textContent = input.files[0].name;
+        }
+    }
+
+
+
+    document.querySelector('#images').addEventListener('change', function(event) {
+        const fileList = event.target.files;
+        const previewContainer = document.querySelector('#imagePreview');
+
+        previewContainer.innerHTML = '';
+
+        for (let i = 0; i < fileList.length; i++) {
+            const file = fileList[i];
+
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.marginRight = '10px';
+                    img.style.marginBottom = '10px';
+                    img.classList.add('img-thumbnail');
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+
+    $(document).ready(function() {
+        $('.select-category').select2({
+            placeholder: "Select Category"
+            , allowClear: true
+            , width: '100%'
+        });
+        $('.select-brand').select2({
+            placeholder: "Select Brand"
+            , allowClear: true
+            , width: '100%'
+        });
+        $('.select-tag').select2({
+            placeholder: "Select Tag"
+            , allowClear: true
+            , width: '100%'
+        });
+    });
+
+
+    // Initialize CKEditor on the textareas
+    ClassicEditor
+        .create(document.querySelector('#short_description'))
+        .catch(error => {
+            console.error(error);
+        });
+
+
+    ClassicEditor
+        .create(document.querySelector('#description'))
+        .catch(error => {
+            console.error(error);
+        });
+
+</script>
+
+
 
 @endsection
