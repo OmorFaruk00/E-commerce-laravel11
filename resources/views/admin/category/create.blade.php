@@ -26,25 +26,55 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputFile">Image</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="exampleInputFile" name='image'>
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                </div>
-                           
-                            </div>
+                        <label for="image">Image</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image" onchange="previewImage(event)">
+                            <label class="custom-file-label">Choose file</label>
+                            @error('image')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mt-2">
+                            <img id="imageShow" src="" alt="Selected Image" class="img-thumbnail" style="display: none; width: 100px; height:100px" />
                         </div>
 
                     </div>                
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary float-right">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </section>
+
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const fileLabel = input.nextElementSibling;
+            const imagePreview = document.getElementById("imageShow");
+    
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";
+                };
+                reader.readAsDataURL(input.files[0]);
+                fileLabel.textContent = input.files[0].name;
+            }
+        }
+    
+    
+    
+        
+       
+    
+    
+  
+    
+    
+      
+    
+    </script>
 @endsection

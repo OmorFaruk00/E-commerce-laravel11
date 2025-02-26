@@ -21,17 +21,17 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 |
 */
 
-Route::middleware([
-    'web',
-    InitializeTenancyByDomain::class,
-    PreventAccessFromCentralDomains::class,
-])->group(function () {
-    // Route::get('/', function () {
-    //     return 'tenant page';
-    // })->name('tenant.login');
+// Route::middleware([
+//     'web',
+//     InitializeTenancyByDomain::class,
+//     PreventAccessFromCentralDomains::class,
+// ])->group(function () {
+//     // Route::get('/', function () {
+//     //     return 'tenant page';
+//     // })->name('tenant.login');
 
 
-Route::get('/new', [TenantController::class, 'test']);
-});
+// Route::get('/new', [TenantController::class, 'test']);
+// });
 
 

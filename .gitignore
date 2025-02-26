@@ -2,6 +2,7 @@
 /node_modules
 /public/*
 !/public/admin/
+!/public/index.php
 /storage/*.key
 /storage/pail
 /vendor

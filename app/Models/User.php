@@ -6,30 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
-class User extends Authenticatable
+use Illuminate\Database\Eloquent\SoftDeletes;class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
-  
+    use HasFactory, Notifiable, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+   
+    protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -53,10 +36,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)->select('roles.id','roles.name');
     }
 
-    // public function role(): MorphToMany
-    // {
-    //     return $this->morphToMany(Role::class, 'roleable')->select('roles.id', 'roles.name');
-    // }
+  
 
 
    
