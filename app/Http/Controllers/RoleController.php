@@ -2,66 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleRequest;
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Repositories\RoleRepository;
 
 class RoleController extends Controller
-
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public $roleRepository;
+    public function  __construct(RoleRepository $roleRepository)
+    {
+        $this->roleRepository = $roleRepository;        
+    }
+ 
     public function index()
     {
-        return  User::with('role')->get();
+        return $this->roleRepository->index();       
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+  
     public function create()
     {
-        return 'role create';
+        return $this->roleRepository->create();
+    }  
+
+    public function store(RoleRequest $request)    
+    {
+        return $this->roleRepository->store($request);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+ 
+    public function show(Role $role)
     {
-        //
+        return $role;
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+   
+    public function edit(Role $role)
     {
-        //
+        return $this->roleRepository->edit($role);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+  
+    public function update(RoleRequest $request, Role $role)
     {
-        //
+        return $this->roleRepository->update($request,$role);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+  
+    public function destroy(Role $role)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return $this->roleRepository->destroy($role);
     }
 }

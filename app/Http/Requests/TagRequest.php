@@ -26,7 +26,6 @@ class TagRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'slug' => 'required', Rule::unique('tags', 'slug')->ignore($tagId),
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }

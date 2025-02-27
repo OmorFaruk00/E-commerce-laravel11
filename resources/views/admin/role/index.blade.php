@@ -6,8 +6,8 @@
       <div class=" col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">User Data</h3>
-            <a href="{{ route('user.create') }}" class="btn btn-primary float-right">Add User</a>
+            <h3 class="card-title">Roles Data</h3>
+            <a href="{{ route('role.create') }}" class="btn btn-primary float-right">Add Role</a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -16,9 +16,6 @@
                   <tr>
                     <th>Sl</th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Image</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -27,15 +24,12 @@
                   <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->email }}</td>
-                    <td>{{ $item->phone }}</td>
-                    <td> <img src="{{ asset($item->image) }}" alt="Image" width="60" height="60"></td>
                     </td>
                     <td>
-                      <a href="{{ route('user.edit', $item->id) }}" class="btn btn-sm btn-info mr-3 mb-2"><i
+                      <a href="{{ route('role.edit', $item->id) }}" class="btn btn-sm btn-info mr-3 mb-2"><i
                           class="fas fa-edit"></i></a>
-                      <form action="{{ route('user.destroy', $item->id) }}" method="POST" style="display:inline;"
-                        onsubmit="return confirm('Are you sure you want to delete this user?');">
+                      <form action="{{ route('role.destroy', $item->id) }}" method="POST" style="display:inline;"
+                        onsubmit="return confirm('Are you sure you want to delete this role?');">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger mb-2" title="Delete">

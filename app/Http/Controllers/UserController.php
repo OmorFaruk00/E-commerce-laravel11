@@ -37,12 +37,12 @@ class UserController extends Controller
         return $user;
     }
    
-    public function edit(User $user)
+    public function edit($id)
     {
-        return $this->userRepository->edit($user);
+        return $this->userRepository->edit($id);
     }
   
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         return $this->userRepository->update($request,$user);
     }

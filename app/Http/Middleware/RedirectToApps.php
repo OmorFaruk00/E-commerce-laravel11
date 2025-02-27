@@ -16,7 +16,7 @@ class RedirectToApps
     public function handle($request, Closure $next)
     {
         if(!empty(session('token'))){
-            return redirect()->route('dashboard');
+            return redirect()->route('admin.dashboard');
         }
         return $next($request);
     }

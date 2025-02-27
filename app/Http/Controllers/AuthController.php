@@ -56,6 +56,7 @@ class AuthController extends Controller
             $apiKey->save();
 
             Session::put('token', $token);
+            Session::put('user', $user);
             return response()->json(['token' => $token], 200);
         } else {
             return response()->json(['error' => "Invalid email or password."], 404);

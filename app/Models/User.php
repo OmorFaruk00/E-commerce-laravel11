@@ -30,10 +30,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
 
     public function role()
     {
-        return $this->belongsToMany(Role::class)->select('roles.id','roles.name');
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+        // return $this->belongsToMany(Role::class)->select('roles.id','roles.name');
     }
 
   

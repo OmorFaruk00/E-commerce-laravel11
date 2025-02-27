@@ -9,12 +9,14 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        @if(session()->has('user'))
         <div class="image">
-          <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{asset(session('user')->image)}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{ session('user')->name }}</a>
         </div>
+        @endif
       </div>
 
       <!-- SidebarSearch Form -->
@@ -33,7 +35,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">        
           <li class="nav-item">
-            <a href="#" class="nav-link active">
+            <a href="{{route('dashboard')}}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -43,7 +45,7 @@
           </li>
      
           <li class="nav-item">
-            <a href="{{route('category.index')}}" class="nav-link">
+            <a href="{{route('category.index')}}" class="nav-link {{ request()->routeIs('category.index') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
                Category
@@ -52,7 +54,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('tag.index')}}" class="nav-link">
+            <a href="{{route('tag.index')}}" class="nav-link {{ request()->routeIs('tag.index') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tags"></i>
               <p>
                Tag
@@ -61,7 +63,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('brand.index')}}" class="nav-link">
+            <a href="{{route('brand.index')}}" class="nav-link {{ request()->routeIs('brand.index') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
                Brand
@@ -70,10 +72,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('product.index')}}" class="nav-link">
+            <a href="{{route('product.index')}}" class="nav-link {{ request()->routeIs('product.index') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
                Product
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('user.index')}}" class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+               User
                 
               </p>
             </a>
@@ -94,37 +105,27 @@
    
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fas fa-cog"></i>
               <p>
-                Forms
+                Setting
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/forms/general.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>General Elements</p>
+                <a href="{{route('setting.assign_role_permission')}}" class="nav-link">
+                  <i class="fas fa-user-shield"></i>
+                  <p>Role Permission</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/advanced.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Advanced Elements</p>
+                <a href="{{route('setting.assign_special_permission')}}" class="nav-link">
+                  <i class="fas fa-user-lock"></i>
+                  <p>Special Permission</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="pages/forms/editors.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Editors</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/validation.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Validation</p>
-                </a>
-              </li>
+           
+           
             </ul>
           </li>
       
